@@ -1,0 +1,22 @@
+{% extends 'news/default.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+    <h2>Вход</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Войти</button>
+    </form>
+    <a href="{% url 'google_login' %}" class="btn btn-primary">Войти через Google</a>
+{% endblock %}
+
+{% block extra_script %}
+  <script>
+    // Перенаправление после успешного входа
+    window.location.href = "{% url 'news_list' %}";
+  </script>
+{% endblock %}

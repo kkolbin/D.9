@@ -1,0 +1,6 @@
+{% extends 'news/default.html' %}
+
+{% block content %}
+  <h2>Войти через Google</h2>
+  <a href="{% provider_login_url 'google' %}" class="btn btn-primary">Войти через Google</a>
+{% endblock %}

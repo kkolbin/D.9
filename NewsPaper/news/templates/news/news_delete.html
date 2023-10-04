@@ -1,0 +1,13 @@
+{% extends 'news/default.html' %}
+
+{% block title %}Удаление новости/статьи{% endblock %}
+
+{% block content %}
+    <h2>Удаление новости</h2>
+    <p>Вы действительно хотите удалить новость/статью "{{ post.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+        <a href="{% url 'news:news_detail' pk=news.pk %}">Отмена</a>
+    </form>
+{% endblock %}

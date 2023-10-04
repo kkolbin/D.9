@@ -1,0 +1,29 @@
+{% extends 'news/default.html' %}
+
+{% load censor %}
+
+{% block title %}Детали новости{% endblock %}
+
+<a href="{% url 'news:news_create' %}">Добавить новость</a>
+
+{% block content %}
+    <h2>{{ news.title|censor }}</h2>
+    <p>Автор: {{ news.author.username }}</p>
+    <p>{{ news.created_at|date:"d.m.Y" }}</p>
+    <p>Рейтинг: {{ news.rating }}</p>
+    <p>Категории:
+        {% for category in news.categories.all %}
+            <span>{{ category.name }}</span>
+            {% if category_subscribed %}
+                <a href="{% url 'news:toggle_category_subscription' category.id 0 %}">Отписаться</a>
+            {% else %}
+                <a href="{% url 'news:toggle_category_subscription' category.id 1 %}">Подписаться</a>
+            {% endif %}
+        {% endfor %}
+    </p>
+    <p>{{ news.content|censor }}</p>
+
+    <a href="{% url 'news:news_edit' pk=news.pk %}">Редактировать</a>
+    <a href="{% url 'news:news_delete' pk=news.pk %}">Удалить</a>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'news/default.html' %}
+
+{% block content %}
+<h2>Стать автором</h2>
+<p>Вы можете стать автором и получить права на создание, редактирование и удаление статей/новостей.</p>
+<form action="{% url 'news:become_author' %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Стать автором</button>
+</form>
+{% endblock %}

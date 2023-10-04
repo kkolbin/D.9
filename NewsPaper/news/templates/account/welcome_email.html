@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добро пожаловать!</title>
+</head>
+<body>
+    <p>Уважаемый {{ user.username }},</p>
+    <p>Добро пожаловать на наш сайт! Мы очень рады видеть вас здесь.</p>
+    <p>Для активации вашей учетной записи перейдите по <a href="{% url 'activate_account' user.id user.profile.
+    activation_key %}">ссылке</a>.</p>
+    <p>С уважением, Ваш сайт.</p>
+</body>
+</html>

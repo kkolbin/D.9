@@ -1,0 +1,10 @@
+{% extends 'news/default.html' %}
+
+{% block content %}
+  <h2>Вход через Google</h2>
+  <form method="POST" action="{% url 'google_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Войти</button>
+  </form>
+{% endblock %}

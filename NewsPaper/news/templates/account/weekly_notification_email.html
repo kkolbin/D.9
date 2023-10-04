@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Новые новости за неделю</title>
+</head>
+<body>
+    <h1>Новые новости за неделю</h1>
+    <p>Здравствуйте, {{ user.username }},</p>
+    <p>Вот список новых новостей, появившихся за последнюю неделю:</p>
+    <ul>
+        {% for article in articles %}
+            <li><a href="http://{{ domain }}{% url 'news:news_detail' pk=article.pk %}">{{ news.title }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

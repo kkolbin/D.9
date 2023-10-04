@@ -1,0 +1,61 @@
+{% load static %}
+{% load censor %}
+{% load censor custom_tags %}
+
+
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{% block title %}News Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>News Portal</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'news:news_list' %}">Список новостей</a></li>
+                {% if user.is_authenticated %}
+                    <p>Hello, {{ user.username }}!</p>
+                    <a href="{% url 'account_logout' %}">Logout</a>
+                {% else %}
+                    <p>You are not logged in.</p>
+                    <a href="{% url 'account_login' %}">Login</a>
+                {% endif %}
+            </ul>
+        </nav>
+        <main>
+            {% block content %}
+            {% endblock %}
+
+            <!-- Постраничная навигация -->
+            {% if news.has_previous or news.has_next %}
+                <div class="pagination">
+                    {% if news.has_previous %}
+                        <a href="?page=1">Первая</a>
+                        <a href="?page={{ news.previous_page_number }}">Предыдущая</a>
+                    {% endif %}
+                    {% for page_num in news.paginator.page_range %}
+                        {% if news.number == page_num %}
+                            <span class="current-page">{{ page_num }}</span>
+                        {% else %}
+                            <a href="?page={{ page_num }}">{{ page_num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if news.has_next %}
+                        <a href="?page={{ news.next_page_number }}">Следующая</a>
+                        <a href="?page={{ news.paginator.num_pages }}">Последняя</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        </main>
+        <footer>
+            <p>&copy; 2023 News Portal. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

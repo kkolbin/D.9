@@ -1,0 +1,37 @@
+{% extends 'news/default.html' %}
+{% load censor %}
+{% load censor custom_tags %}
+
+{% block title %}Список новостей{% endblock %}
+
+{% block content %}
+    <a href="{% url 'news:search' %}">Поиск</a>
+    <a href="{% url 'news:news_create' %}">Добавить новость</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'account_logout' %}?next=/news">Выйти</a>
+    {% else %}
+        <a href="{% url 'account_login' %}?next=/news">Войти</a>
+        <a href="{% url 'account_signup' %}?next=/news">Зарегистрироваться</a>
+    {% endif %}
+    {% if user|user_belongs_to_group:'common' %}
+        <a href="{% url 'news:become_author' %}">Стать автором</a>
+    {% endif %}
+
+    <h2>Список новостей</h2>
+    <p>Количество новостей: {{ news_count }}</p>
+    <ul>
+        {% for post in news %}
+            <li>
+                <h3><a href="{% url 'news:news_detail' post.id %}">{{ post.title|censor }}</a></h3>
+                <p>{{ post.created_at|date:"d.m.Y" }}</p>
+                <p>Рейтинг: {{ post.rating }}</p>
+                <p>Категории:
+                    {% for category in post.categories.all %}
+                        <span>{{ category.name }}</span>
+                    {% endfor %}
+                </p>
+                <p>{{ post.content|censor|truncatechars:20 }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'news/default.html' %}
+
+{% block title %}Поиск новостей{% endblock %}
+
+{% block content %}
+    <h2>Поиск новостей</h2>
+    <form method="GET" action="{% url 'news:search_results' %}">
+        <label for="search_title">Название:</label>
+        <input type="text" name="title" id="search_title">
+        <br>
+        <label for="author">Автор:</label>
+        <input type="text" name="author" id="author">
+        <br>
+        <label for="date">Дата публикации позже:</label>
+        <input type="date" name="date" id="date">
+        <br>
+        <input type="submit" value="Искать">
+    </form>
+{% endblock %}
