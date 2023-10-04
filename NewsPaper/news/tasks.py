@@ -15,8 +15,9 @@ def send_weekly_notification():
 
     users_news = {}
     for news in new_news:
-        for user in news.author.subscribers.all():
-            users_news.setdefault(user, []).append(news)
+        for category in news.categories.all():
+            for user in category.subscribers.all():
+                users_news.setdefault(user, []).append(news)
 
     for user, news in users_news.items():
         current_site = get_current_site(None)
@@ -38,4 +39,3 @@ def send_weekly_notification():
             user=user,
             defaults={'last_notification_date': timezone.now()}
         )
-
